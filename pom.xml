@@ -4,7 +4,7 @@
   <groupId>com.digital.p1</groupId>
   <artifactId>WebApp</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0</version>
   <name>WebApp Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -15,7 +15,61 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <finalName>WebApp</finalName>
-  </build>
+
+<distributionManagement>
+<repository>
+<id>releaseRepo</id>
+<name>releaseRepo</name>
+<url>http://35.185.106.30:8081/nexus/content/repositories/releaseRepo/</url>
+</repository>
+
+<snapshotRepository>
+<id>snapshotRepo</id>
+<name>snapshotRepo</name>
+<url>http://35.185.106.30:8081/nexus/content/repositories/snapshotRepo/</url>
+</snapshotRepository>
+</distributionManagement>
+
+
+
+
+<profiles>
+<profile>
+<id>dev</id>
+<build>
+<plugins>
+<plugin>
+		<groupId>org.apache.tomcat.maven</groupId>
+		<artifactId>tomcat7-maven-plugin</artifactId>
+		<version>2.2</version>
+		<configuration>
+			<url>http://localhost:8080/manager/text</url>
+			<server>TomcatServer</server>
+			<path>/WebApp1.0</path>
+		</configuration>
+	</plugin>
+</plugins>
+</build>
+</profile>
+
+<profile>
+<id>qa</id>
+<build>
+<plugins>
+<plugin>
+   <groupId>org.apache.tomcat.maven</groupId>
+   <artifactId>tomcat7-maven-plugin</artifactId>
+   <version>2.2</version>
+   <configuration>
+       <url>http://35.229.121.10:7777/manager/text</url>
+       <server>TomcatServer</server>
+       <path>/WebAppQA</path>
+   </configuration>
+</plugin>
+</plugins>
+</build>
+</profile>
+
+
+</profiles>
 </project>
